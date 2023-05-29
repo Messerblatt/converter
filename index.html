@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" 
+    crossorigin="anonymous"></script>
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon2.ico">
+    <link href="style.css" rel="stylesheet">
+    <link href="styleOut.css" rel="stylesheet">
+    <title>Eth / Wei / Gwei</title>
+</head>
+
+<body class="font-mono ">
+<h1 class="headline mt-20 border-b-4 border-zinc-600">Convert Eth / Wei / Gwei</h1>
+
+
+<div class="container">
+  <div class="font-mono text-gray-700">
+    <div>
+      <div class="xl2" for="eth">ETH</div>
+      <input class="textL" type="number" id="eth" placeholder="Enter ETH amount" oninput="convert('eth')" />
+    </div>
+    <div>
+      <div class="xl2" for="weiInput">GWEI</div>
+      <input class="textL" type="number" id="gwei" placeholder="Enter Gwei amount" oninput="convert('gwei')">
+    </div>
+    <div>
+      <div class="xl2" for="weiInput">WEI</div>
+      <input class="textL" type="number" id="wei" placeholder="Enter Wei amount" oninput="convert('wei')">
+    </div>
+    </div>
+</div>
+
+<div class="text">The conversion functions are embedded right into this HTML. Feel free to copy them if you like.</div>
+<div class="footer font-mono border-t-2 border-zinc-600">
+  <div class="grid-two-cols">
+    <div class="item">Made by <a class="a" target="_blank" href="https://github.com/Messerblatt">Markus</a></div>
+    <div class="item">|</div> 
+  <div class="item">Deployed 2023</div>
+  
+</div>
+</div>
+
+
+<!-- Decimal-Hex Converter here. Not important for the use case so it's outcommented-->
+<!--<div class="container">
+<div class="font-mono text-gray-700">
+  <div>
+    <div class="xl2" for="decimal">DECIMAL: </div>
+    <input class="textL " type="number" id="decimal" step="0.1" placeholder="12345" oninput="convert('decimal')">
+  </div>
+  <div>
+    <div class="xl2" for="hex">HEX: </div>
+    <input class="textL" type="text" id="hex" placeholder="0xabcgd" oninput="convert('hex')">
+  </div>
+</div>
+</div> -->
+<script>
+  function ethToWei(value) { return (value * 1e18).toFixed(0) }
+  function weiToGwei(value) { return (value / 1e9).toFixed(0) }
+  function gweiToWei(value) { return (value * 1e9).toFixed(0)}
+  function weiToEth(value) { return (value / 1e18).toFixed(18); }
+  function decToHex(value) { return value.toString(16); }
+  function hexToDec(value) {
+    if (value.includes("0x")) {
+        hexvalue = value.split("0x")[1]
+          return parseInt(hexvalue , 16);
+    } else { return parseInt(value, 16); }
+  }
+
+
+  function convert(from) {
+    const Input = document.getElementById(from);
+    const Amount = parseFloat(Input.value);
+  
+    if (from === "eth") {
+        document.getElementById('wei').value = ethToWei(Amount);
+        document.getElementById('gwei').value = weiToGwei(ethToWei(Amount));
+    } else if (from === "wei") {
+      document.getElementById('eth').value = weiToEth(Amount);
+      document.getElementById('gwei').value = weiToGwei(Amount);
+    } else if (from === "gwei") {
+      document.getElementById('eth').value = gweiToWei(Amount);
+      document.getElementById('wei').value = weiToEth(Amount);
+    }
+	else if (from === "decimal") {
+      document.getElementById('hex').value = decToHex(Amount);
+    } else if (from === "hex") {
+      data = document.getElementById('hex').value;
+      const decAmount = hexToDec(data);
+      document.getElementById('decimal').value = decAmount;
+  }
+  }
+</script>
+</body>
+</html>
