@@ -68,6 +68,6 @@ html {
 .text {
     color: #222;
     margin: auto;
-    width: 36%;
+    width: fit-content;
     padding-top: 50px;
 }

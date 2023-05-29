@@ -13,8 +13,8 @@
 </head>
 
 <body class="font-mono ">
-<h1 class="headline mt-20 border-b-4 border-zinc-600">Convert Eth / Wei / Gwei</h1>
-
+<h1 class="headline mt-20 border-b-4 border-zinc-600">Basic Ethereum Converter</h1>
+<div class="text">You can find the conversion functions <a target="_blank" class="a" href="https://github.com/ethereumjs/ethereumjs-units">here</a>.</div>
 
 <div class="container">
   <div class="font-mono text-gray-700">
@@ -33,7 +33,7 @@
     </div>
 </div>
 
-<div class="text">The conversion functions are embedded right into this HTML. Feel free to copy them if you like.</div>
+
 <div class="footer font-mono border-t-2 border-zinc-600">
   <div class="grid-two-cols">
     <div class="item">Made by <a class="a" target="_blank" href="https://github.com/Messerblatt">Markus</a></div>
@@ -45,7 +45,7 @@
 
 
 <!-- Decimal-Hex Converter here. Not important for the use case so it's outcommented-->
-<!--<div class="container">
+<div class="container">
 <div class="font-mono text-gray-700">
   <div>
     <div class="xl2" for="decimal">DECIMAL: </div>
@@ -56,11 +56,14 @@
     <input class="textL" type="text" id="hex" placeholder="0xabcgd" oninput="convert('hex')">
   </div>
 </div>
-</div> -->
+</div>
 <script>
-  function ethToWei(value) { return (value * 1e18).toFixed(0) }
-  function weiToGwei(value) { return (value / 1e9).toFixed(0) }
-  function gweiToWei(value) { return (value * 1e9).toFixed(0)}
+  
+
+
+  function ethToWei(value) { return (value * 1e18).toFixed(18) }
+  function weiToGwei(value) { return (value / 1e9).toFixed(18) }
+  function gweiToWei(value) { return (value * 1e9).toFixed(18)}
   function weiToEth(value) { return (value / 1e18).toFixed(18); }
   function decToHex(value) { return value.toString(16); }
   function hexToDec(value) {
@@ -82,11 +85,11 @@
       document.getElementById('eth').value = weiToEth(Amount);
       document.getElementById('gwei').value = weiToGwei(Amount);
     } else if (from === "gwei") {
-      document.getElementById('eth').value = gweiToWei(Amount);
+      document.getElementById('eth').value = gweiToWei(weiToEth(Amount));
       document.getElementById('wei').value = weiToEth(Amount);
     }
 	else if (from === "decimal") {
-      document.getElementById('hex').value = decToHex(Amount);
+      document.getElementById('hex').value = "0x" + decToHex(Amount);
     } else if (from === "hex") {
       data = document.getElementById('hex').value;
       const decAmount = hexToDec(data);
