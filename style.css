@@ -66,6 +66,8 @@ html {
 .item {place-self: center;}
 
 .text {
-    margin-top: 10%;
     color: #222;
+    margin: auto;
+    width: 36%;
+    padding-top: 50px;
 }
