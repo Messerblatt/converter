@@ -9,3 +9,5 @@ The goal of the converter is to become a useful "all-in-one-converter" for every
 - [ ] Migrate to nextJS
 - [ ] Implement [ethereumjs](https://github.com/ethereumjs/ethereumjs-units)
 - [ ] Implement more conversions
+- [X] Dark theme
+- [ ] Mobile optimized
