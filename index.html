@@ -1,42 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" class="darkThemed">
+<head >
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" 
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <link rel="shortcut icon" type="image/jpg" href="images/favicon2.ico">
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+    
     <link href="style.css" rel="stylesheet">
     <link href="styleOut.css" rel="stylesheet">
-    <title>Eth / Wei / Gwei</title>
+    <title>Ξth / Wei / Gwei</title>
+    
 </head>
 
-<body class="font-mono ">
-<h1 class="headline mt-20 border-b-4 border-zinc-600">Basic Ethereum Converter</h1>
-<div class="text">You can find the conversion functions <a target="_blank" class="a" href="https://github.com/ethereumjs/ethereumjs-units">here</a>.</div>
+<body class="font-mono main">
+
+  <div>
+    <h1 class="text darkThemed headline mt-20 border-b-4 border-zinc-600">Basic Ξthereum Converter</h1>
+  </div>
+  <div class="text darkThemed">You can find the conversion functions <a target="_blank" class="link contrasted" href="https://github.com/ethereumjs/ethereumjs-units">here</a>.</div>
+  
+  
+  
+  <div class="darkTheme"><i class="fa fa-moon-o" aria-hidden="true"></i></div>
 
 <div class="container">
   <div class="font-mono text-gray-700">
     <div>
-      <div class="xl2" for="eth">ETH</div>
+      <div class="xl2 darkThemed" for="eth">ΞTH</div>
       <input class="textL" type="number" id="eth" placeholder="Enter ETH amount" oninput="convert('eth')" />
     </div>
     <div>
-      <div class="xl2" for="weiInput">GWEI</div>
+      <div class="xl2 darkThemed" for="weiInput">GWEI</div>
       <input class="textL" type="number" id="gwei" placeholder="Enter Gwei amount" oninput="convert('gwei')">
     </div>
     <div>
-      <div class="xl2" for="weiInput">WEI</div>
+      <div class="xl2 darkThemed" for="weiInput">WEI</div>
       <input class="textL" type="number" id="wei" placeholder="Enter Wei amount" oninput="convert('wei')">
     </div>
     </div>
 </div>
 
-
 <div class="footer font-mono border-t-2 border-zinc-600">
   <div class="grid-two-cols">
-    <div class="item">Made by <a class="a" target="_blank" href="https://github.com/Messerblatt">Markus</a></div>
+    <div class="item">Made by <a class="link contrasted" target="_blank" href="https://github.com/Messerblatt">Markus</a></div>
     <div class="item">|</div> 
   <div class="item">Deployed 2023</div>
   
@@ -48,18 +58,37 @@
 <div class="container">
 <div class="font-mono text-gray-700">
   <div>
-    <div class="xl2" for="decimal">DECIMAL: </div>
+    <div class="xl2 darkThemed" for="decimal">DECIMAL: </div>
     <input class="textL " type="number" id="decimal" step="0.1" placeholder="12345" oninput="convert('decimal')">
   </div>
   <div>
-    <div class="xl2" for="hex">HEX: </div>
+    <div class="xl2 darkThemed" for="hex">HEX: </div>
     <input class="textL" type="text" id="hex" placeholder="0xabcgd" oninput="convert('hex')">
   </div>
 </div>
 </div>
 <script>
-  
 
+  toggled = true;
+  $(".darkTheme").on("click", function() {
+    if (toggled === false) {
+      toggled = true;
+      $(".darkTheme").html("<i class='fa fa-moon-o' aria-hidden='true'></i>");
+      $("html").addClass("darkThemed");
+      $(".xl2").addClass("darkThemed");
+      $(".text").addClass("darkThemed");
+      $(".link").addClass("contrasted");
+    
+    } else  {
+      toggled = false;
+      $(".darkTheme").html("<i class='fa fa-sun-o' aria-hidden='true'></i>");
+      $("html").removeClass("darkThemed");
+      $(".xl2").removeClass("darkThemed");
+      $(".text").removeClass("darkThemed");
+      $(".link").removeClass("contrasted");
+    }  
+  })
+    
 
   function ethToWei(value) { return (value * 1e18).toFixed(18) }
   function weiToGwei(value) { return (value / 1e9).toFixed(18) }

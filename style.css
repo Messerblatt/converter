@@ -2,11 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-/* input[type='number'] {
- 
+html {
+    margin-left: 5%;
+    margin-right: 5%;
+    background-color: #EEEEEE;
     
-} */
+}
 
+.headline {
+    font-size: 4em;
+    width: fit-content;
+    margin: auto;
+    align-self: center;
+    color: #222;
+}
+.xl2 {
+    width: 36vw;
+    text-align: right;
+}
 .textL {
     width: 36vw;
     border: 1px solid black;
@@ -21,35 +34,7 @@
     /* border: 1px solid black; */
 }
 
-.headline {
-    font-size: 4em;
-    width: fit-content;
-    margin: auto;
-    align-self: center;
-    color: #222;
-}
-.xl2 {
-    width: 36vw;
-    text-align: right;
-}
-
-html {
-    margin-left: 5%;
-    margin-right: 5%;
-    background-color: #EEEEEE;
-}
-
-.footer {
-    position: absolute;
-    bottom: 10px;
-    width: 90vw;
-    display: flex;
-    justify-content: center;
-    border-top: 2px solid black;
-    
-}
-
-.a {
+.link {
     border-top: 1px solid black;
     background-color: black;
     color: white;
@@ -70,4 +55,36 @@ html {
     margin: auto;
     width: fit-content;
     padding-top: 50px;
+}
+
+.darkThemed {
+    background-color: rgb(17, 17, 17);
+    color: aliceblue; 
+  }
+
+  .darkThemeButton {
+    position: absolute;
+    top: 33px;
+    left: 33px;
+  }
+
+
+.contrasted {
+    background-color: white;
+    color: rgb(17, 17, 17); 
+}
+
+.fa {
+    font-size: 35px;
+}
+
+  
+
+.footer {
+    position: absolute;
+    bottom: 10px;
+    width: 90vw;
+    display: flex;
+    justify-content: center;
+    border-top: 2px solid black;
 }
