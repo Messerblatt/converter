@@ -17,8 +17,9 @@
 </head>
 
 <body class="font-mono main">
-  <div class="container darkThemed">
-    <div class="ethDataResponseField "></div>
+  <div class="container modal">
+    <div class="closeButton">X</div>
+    <div class="ethDataResponseField"></div>
     </div>
   <div>
     <h1 class="text darkThemed headline mt-20 border-b-4 border-zinc-600">Basic Ξthereum Converter</h1>
@@ -67,7 +68,7 @@
   </div>
   <div>
     <div class="xl2 darkThemed" for="hex">HEX: </div>
-    <input class="textL" type="text" id="hex" placeholder="0xabcgd" oninput="convert('hex')">
+    <input class="textL" type="text" id="hex" placeholder="0x000fff" oninput="convert('hex')">
   </div>
 </div>
 </div>
@@ -75,7 +76,7 @@
 <script>
   
   $(document).ready(function()  {
-    $(".ethDataResponseField").hide();
+    $(".modal").hide();
   })
 
   function fetchETH() {
@@ -92,8 +93,7 @@
       })
       $(".ethDataResponseField").html(fields);
       console.log("Result: ",result.RAW.ETH.USD);
-      $(".ethDataResponseField").show();
-      
+      $(".modal").show();
     })
   }
 
@@ -102,12 +102,16 @@ $(".fetchETH").on("click", function() {
   fetchETH();
 })
 
-  toggled = true;
+$(".closeButton").on("click", function() {
+  $(".ethDataResponseField").hide();
+})
+  toggled = false;
   $(".darkTheme").on("click", function() {
     if (toggled === false) {
       toggled = true;
-      
+
       $(".darkTheme").html("<i class='fa fa-moon-o' aria-hidden='true'></i>");
+      //$(".darkThemed").addClass("darkThemed");
       $("html").addClass("darkThemed");
       $(".xl2").addClass("darkThemed");
       $(".text").addClass("darkThemed");
@@ -116,11 +120,12 @@ $(".fetchETH").on("click", function() {
     } else  {
       toggled = false;
       $(".darkTheme").html("<i class='fa fa-sun-o' aria-hidden='true'></i>");
+      //$(".darkThemed").removeClass("darkThemed");
       $("html").removeClass("darkThemed");
       $(".xl2").removeClass("darkThemed");
       $(".text").removeClass("darkThemed");
       $(".link").removeClass("contrasted");
-    }  
+    }
   })
     
 

@@ -10,4 +10,6 @@ The goal of the converter is to become a useful "all-in-one-converter" for every
 - [ ] Implement [ethereumjs](https://github.com/ethereumjs/ethereumjs-units)
 - [ ] Implement more conversions
 - [X] Dark theme
+- [ ] Make Dark theme D.R.Y.
 - [ ] Mobile optimized
+- [ ] Reinvent the modal-dialogue

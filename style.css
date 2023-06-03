@@ -23,6 +23,7 @@ html {
     margin-top: 100px;
     padding-top: 30px;
     padding-bottom: 30px;
+    position: relative;
     /* border: 1px solid black; */
 }
 
@@ -95,10 +96,19 @@ html {
 .ethDataResponseField {
     background-color: #222;
     position: absolute;
+    margin-top: -100px;
     z-index: 1;
     width: fit-content;
-    margin: auto;
-    height: fit-content;
-    background-color: #EEEEEE;
+    margin: 0;
+    top: 75%;
+    left: 50%;
+    -ms-transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);   
+}
 
+.closeButton {
+    width: 20px;
+    height: 20px;
+    color: red;
+    background-color: aqua;
 }
