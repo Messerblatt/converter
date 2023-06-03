@@ -10,7 +10,6 @@ html {
     margin-left: 5%;
     margin-right: 5%;
     background-color: #EEEEEE;
-    
 }
 
 .textL {
@@ -88,8 +87,18 @@ html {
     position: absolute;
     bottom: 10px;
     width: 90vw;
-    
     display: flex;
     justify-content: center;
     border-top: 2px solid black;
+}
+
+.ethDataResponseField {
+    background-color: #222;
+    position: absolute;
+    z-index: 1;
+    width: fit-content;
+    margin: auto;
+    height: fit-content;
+    background-color: #EEEEEE;
+
 }

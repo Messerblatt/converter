@@ -10,7 +10,6 @@
     
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     
-    
     <link href="style.css" rel="stylesheet">
     <link href="styleOut.css" rel="stylesheet">
     <title>Ξth / Wei / Gwei</title>
@@ -18,10 +17,14 @@
 </head>
 
 <body class="font-mono main">
-
+  <div class="container darkThemed">
+    <div class="ethDataResponseField "></div>
+    </div>
   <div>
     <h1 class="text darkThemed headline mt-20 border-b-4 border-zinc-600">Basic Ξthereum Converter</h1>
   </div>
+  <div class="text darkThemed fetchETH">Fetch ETH price data</div>
+  
   <div class="text darkThemed">You can find the conversion functions <a target="_blank" class="link contrasted" href="https://github.com/ethereumjs/ethereumjs-units">here</a>.</div>
   
   
@@ -68,12 +71,42 @@
   </div>
 </div>
 </div>
+
 <script>
+  
+  $(document).ready(function()  {
+    $(".ethDataResponseField").hide();
+  })
+
+  function fetchETH() {
+    fetch("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD")
+    .then(response => {
+      return response.json();
+    })
+    .then(result => {
+      data = result.RAW.ETH.USD
+      fields = "";
+      jQuery.each(data, function(i,j) {
+        fields += `<div>I${i}: ${j}</div>`
+        console.log("i: ", i, " j: ", j);
+      })
+      $(".ethDataResponseField").html(fields);
+      console.log("Result: ",result.RAW.ETH.USD);
+      $(".ethDataResponseField").show();
+      
+    })
+  }
+
+
+$(".fetchETH").on("click", function() {
+  fetchETH();
+})
 
   toggled = true;
   $(".darkTheme").on("click", function() {
     if (toggled === false) {
       toggled = true;
+      
       $(".darkTheme").html("<i class='fa fa-moon-o' aria-hidden='true'></i>");
       $("html").addClass("darkThemed");
       $(".xl2").addClass("darkThemed");
