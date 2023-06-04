@@ -7,30 +7,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <link rel="shortcut icon" type="image/jpg" href="images/favicon2.ico">
-    
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Space+Mono">
+
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     
+    <link href="styleOut.css"
+     rel="stylesheet">
     <link href="style.css" rel="stylesheet">
-    <link href="styleOut.css" rel="stylesheet">
     <title>Ξth / Wei / Gwei</title>
     
 </head>
 
 <body class="font-mono main">
-  <div class="container modal">
-    <div class="closeButton">X</div>
+  <div class="modal">
+    <div class="taskbar">
+      <div class="modalTitle">_</div>
+      <div class="closeButton cursorChange">X</div>
+    </div>
     <div class="ethDataResponseField"></div>
     </div>
   <div>
     <h1 class="text darkThemed headline mt-20 border-b-4 border-zinc-600">Basic Ξthereum Converter</h1>
   </div>
-  <div class="text darkThemed fetchETH">Fetch ETH price data</div>
+  
   
   <div class="text darkThemed">You can find the conversion functions <a target="_blank" class="link contrasted" href="https://github.com/ethereumjs/ethereumjs-units">here</a>.</div>
   
   
   
-  <div class="darkTheme"><i class="fa fa-moon-o" aria-hidden="true"></i></div>
+  <div class="darkTheme cursorChange"><i class="fa fa-moon-o" aria-hidden="true"></i></div>
 
 <div class="container">
   <div class="font-mono text-gray-700">
@@ -49,17 +55,8 @@
     </div>
 </div>
 
-<div class="footer font-mono border-t-2 border-zinc-600">
-  <div class="grid-two-cols">
-    <div class="item">Made by <a class="link contrasted" target="_blank" href="https://github.com/Messerblatt">Markus</a></div>
-    <div class="item">|</div> 
-  <div class="item">Deployed 2023</div>
-  
-</div>
-</div>
 
 
-<!-- Decimal-Hex Converter here. Not important for the use case so it's outcommented-->
 <div class="container">
 <div class="font-mono text-gray-700">
   <div>
@@ -72,40 +69,65 @@
   </div>
 </div>
 </div>
+<h1 class="textlg container">Fetch Price Data</h1>
+<div class="button darkThemed _fetch cursorChange" id="ETH">Ethererum (ETH)</div>
+<div class="button darkThemed _fetch cursorChange" id="BNB">Binance (BNB)</div>
+<div class="button darkThemed _fetch cursorChange" id="USDT">Tether (USDT)</div>
+<div class="button darkThemed _fetch cursorChange" id="AVAX">Avalanche (AVAX)</div>
+<div class="button darkThemed _fetch cursorChange" id="LINK">LINK (LINK)</div>
+<div class="button darkThemed _fetch cursorChange" id="ARB">Arbitrum (ARB)</div>
 
-<script>
-  
+
+<div class="footer font-mono border-t-2 border-zinc-600">
+  <div class="grid-two-cols">
+    <div class="item">Made by <a class="link contrasted" target="_blank" href="https://github.com/Messerblatt">Markus</a></div>
+    <div class="item">|</div> 
+  <div class="item">Deployed 2023</div>
+</div>
+</div>
+
+<script>  
   $(document).ready(function()  {
     $(".modal").hide();
   })
 
-  function fetchETH() {
-    fetch("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD")
+  function _fetch(fsyms) {
+
+    fetch(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${fsyms}&tsyms=USD`)
     .then(response => {
       return response.json();
     })
+    
     .then(result => {
-      data = result.RAW.ETH.USD
+      data = result.RAW[fsyms].USD;
       fields = "";
       jQuery.each(data, function(i,j) {
         fields += `<div>I${i}: ${j}</div>`
-        console.log("i: ", i, " j: ", j);
+        //console.log("i: ", i, " j: ", j);
       })
       $(".ethDataResponseField").html(fields);
-      console.log("Result: ",result.RAW.ETH.USD);
+      $(".modalTitle").html(fsyms);
+      console.log("Result: ", data);
       $(".modal").show();
     })
   }
 
 
-$(".fetchETH").on("click", function() {
-  fetchETH();
+$("._fetch").on("click", function() {
+  var id = $(this).attr('id');
+  console.log("ID: ", id);
+  _fetch(id);
 })
 
 $(".closeButton").on("click", function() {
-  $(".ethDataResponseField").hide();
+  $(".modal").hide();
 })
-  toggled = false;
+/*
+while($(".modal").is(':visible')) {
+  //console.log("VVV");
+}
+*/
+  toggled = true;
   $(".darkTheme").on("click", function() {
     if (toggled === false) {
       toggled = true;

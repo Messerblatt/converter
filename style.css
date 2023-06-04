@@ -1,15 +1,17 @@
-@tailwind base;
+/*@tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities;*/
 
-/* input[type='number'] {
- 
-    
-} */
+/* input[type='number'] { } */
 html {
     margin-left: 5%;
     margin-right: 5%;
     background-color: #EEEEEE;
+    font-family: 'Space Mono ', 'Sans';
+}
+
+.cursorChange:hover {
+    cursor: crosshair;   
 }
 
 .textL {
@@ -20,11 +22,10 @@ html {
 .container {
     display: flex;
     justify-content: center;
-    margin-top: 100px;
     padding-top: 30px;
     padding-bottom: 30px;
-    position: relative;
-    /* border: 1px solid black; */
+    
+    /* border: 1.5px solid black; */
 }
 
 .headline {
@@ -38,7 +39,6 @@ html {
     width: 36vw;
     text-align: right;
 }
-
 
 
 .link {
@@ -61,9 +61,16 @@ html {
     color: #222;
     margin: auto;
     width: fit-content;
-    padding-top: 50px;
+    margin-top: 50px;
+    height: max-content;
 }
 
+.button {
+    color: #222;
+    margin: auto;
+    width: fit-content;
+    height: max-content;
+}
 .darkThemed {
     background-color: rgb(17, 17, 17);
     color: aliceblue; 
@@ -77,7 +84,7 @@ html {
   .fa {
     font-size: 35px;
   }
-
+  
   .darkTheme {
     position: absolute;
     top: 33px;
@@ -86,29 +93,62 @@ html {
 
 .footer {
     position: absolute;
-    bottom: 10px;
+    bottom: 0px;
     width: 90vw;
     display: flex;
     justify-content: center;
     border-top: 2px solid black;
 }
 
+.modal {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    position: absolute;
+    z-index: 1;
+    top: 10%;
+    left: 50%;
+    width: 50%;
+    -ms-transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%); 
+}
 .ethDataResponseField {
     background-color: #222;
-    position: absolute;
-    margin-top: -100px;
-    z-index: 1;
-    width: fit-content;
-    margin: 0;
-    top: 75%;
-    left: 50%;
-    -ms-transform: translate(-50%, 0%);
-    transform: translate(-50%, 0%);   
+    width: 100%;
+    
+}
+
+.taskbar {
+    display: flex;
+    color: #111;
+    width: 100%;
+    font-size: 1.1em;
+    background-color: #eee;
+    height: 40px;
+}
+
+.modalTitle {
+    position: relative;
+    left: 10px;
+    width: 90%;
+    text-align: center;
+    margin-right: 15px;
 }
 
 .closeButton {
-    width: 20px;
-    height: 20px;
-    color: red;
-    background-color: aqua;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 1.4em;
+}
+
+
+._fetch {
+    border: #eee 1px solid;
+    width: 28vw;
+    text-align: center;
+}
+
+._fetch:hover {
+    background-color: #EEEEEE;
+    color: #222;
 }
