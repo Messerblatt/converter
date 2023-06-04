@@ -104,7 +104,7 @@
     let value = "";
     
     if(!isNaN(j) && j > previousDataTemplate[i]) {
-      console.log(i, "has changed. Prev: ", previousDataTemplate[i], ". Now: ", j);
+      
       cssClass = "greenFade";
     } else if(!isNaN(j) && j < previousDataTemplate[i]) {
       cssClass = "redFade";
@@ -127,21 +127,20 @@
 
         jQuery.each(priceData, function(i,j) {
           fields += createTableRow(i,j);
-          //console.log("i: ", i, " j: ", j);
         })
 
         fields += "</table>";
         $(".ethDataResponseField").html(fields);
-        console.log("PREV: ", previousDataTemplate);
+        
         }, error: function(error) {
-          console.log("ERROR");
+          console.error(error);
         }
     });
   }
   
   $("._fetch").on("click", function() {
     fsyms = $(this).attr('id');
-    console.log("ID: ", fsyms);
+    
     _fetch();
     $(".modalTitle").html(fsyms);
     $(".modal").show();
