@@ -28,7 +28,7 @@
     <div class="ethDataResponseField"></div>
     </div>
   <div>
-    <h1 class="text darkThemed headline mt-20 border-b-4 border-zinc-600">Basic Ξthereum Converter</h1>
+    <h1 class="text darkThemed headline mt-20 border-b-2 border-zinc-600">Basic Ξthereum Converter</h1>
   </div>
   
   
@@ -69,14 +69,17 @@
   </div>
 </div>
 </div>
-<h1 class="textlg container">Fetch Price Data</h1>
+
+<h1 class="text darkThemed headline border-b-2 border-zinc-600">Fetch Price Data</h1>
+
+<div class="container flowDown">
 <div class="button darkThemed _fetch cursorChange" id="ETH">Ethererum (ETH)</div>
 <div class="button darkThemed _fetch cursorChange" id="BNB">Binance (BNB)</div>
 <div class="button darkThemed _fetch cursorChange" id="USDT">Tether (USDT)</div>
 <div class="button darkThemed _fetch cursorChange" id="AVAX">Avalanche (AVAX)</div>
 <div class="button darkThemed _fetch cursorChange" id="LINK">LINK (LINK)</div>
 <div class="button darkThemed _fetch cursorChange" id="ARB">Arbitrum (ARB)</div>
-
+</div>
 
 <div class="footer font-mono border-t-2 border-zinc-600">
   <div class="grid-two-cols">
@@ -87,46 +90,71 @@
 </div>
 
 <script>  
+  let timer;
+  let previousDataTemplate = {};
+  let fsyms = "";
+
   $(document).ready(function()  {
     $(".modal").hide();
   })
 
-  function _fetch(fsyms) {
-
-    fetch(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${fsyms}&tsyms=USD`)
-    .then(response => {
-      return response.json();
-    })
+  function createTableRow(i, j) {
+    let cssClass = "dataEntry";
+    let key = "";
+    let value = "";
     
-    .then(result => {
-      data = result.RAW[fsyms].USD;
-      fields = "";
-      jQuery.each(data, function(i,j) {
-        fields += `<div>I${i}: ${j}</div>`
-        //console.log("i: ", i, " j: ", j);
-      })
-      $(".ethDataResponseField").html(fields);
-      $(".modalTitle").html(fsyms);
-      console.log("Result: ", data);
-      $(".modal").show();
-    })
+    if(!isNaN(j) && j > previousDataTemplate[i]) {
+      console.log(i, "has changed. Prev: ", previousDataTemplate[i], ". Now: ", j);
+      cssClass = "greenFade";
+    } else if(!isNaN(j) && j < previousDataTemplate[i]) {
+      cssClass = "redFade";
+    }
+    
+    previousDataTemplate[i] = j;
+    
+    col1 = `<td class="${cssClass} tableKey">${i}</td>`;
+    col2 = `<td class="${cssClass} tableValue">${j}</td>`
+    return `<tr>${col1}${col2}</tr>`;
   }
 
+  function _fetch() {
+    fields = "<table class='priceTable'><th></th><th></th>";
+    $.ajax({
+      url: `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${fsyms}&tsyms=USD`,
+      complete: function (result) {
+        JSONResponse = data = JSON.parse(result.responseText);
+        priceData = JSONResponse.RAW[fsyms].USD;
 
-$("._fetch").on("click", function() {
-  var id = $(this).attr('id');
-  console.log("ID: ", id);
-  _fetch(id);
+        jQuery.each(priceData, function(i,j) {
+          fields += createTableRow(i,j);
+          //console.log("i: ", i, " j: ", j);
+        })
+
+        fields += "</table>";
+        $(".ethDataResponseField").html(fields);
+        console.log("PREV: ", previousDataTemplate);
+        }, error: function(error) {
+          console.log("ERROR");
+        }
+    });
+  }
+  
+  $("._fetch").on("click", function() {
+    fsyms = $(this).attr('id');
+    console.log("ID: ", fsyms);
+    _fetch();
+    $(".modalTitle").html(fsyms);
+    $(".modal").show();
+    timer = setInterval(_fetch, 5000);
 })
 
 $(".closeButton").on("click", function() {
   $(".modal").hide();
+  clearInterval(timer);
+  previousDataTemplate = {};
+  cssClass = "";
 })
-/*
-while($(".modal").is(':visible')) {
-  //console.log("VVV");
-}
-*/
+
   toggled = true;
   $(".darkTheme").on("click", function() {
     if (toggled === false) {
@@ -137,7 +165,9 @@ while($(".modal").is(':visible')) {
       $("html").addClass("darkThemed");
       $(".xl2").addClass("darkThemed");
       $(".text").addClass("darkThemed");
+      $("._fetch").addClass("darkThemed");
       $(".link").addClass("contrasted");
+      
     
     } else  {
       toggled = false;
@@ -146,6 +176,7 @@ while($(".modal").is(':visible')) {
       $("html").removeClass("darkThemed");
       $(".xl2").removeClass("darkThemed");
       $(".text").removeClass("darkThemed");
+      $("._fetch").removeClass("darkThemed");
       $(".link").removeClass("contrasted");
     }
   })

@@ -9,7 +9,14 @@ html {
     background-color: #EEEEEE;
     font-family: 'Space Mono ', 'Sans';
 }
-
+::selection {
+    color:rgb(17, 17, 17);
+    background-color: #889;
+}
+h1 h2 h3 h4 h5 h6 {
+    font-size: unset;
+    font-weight: unset;
+}
 .cursorChange:hover {
     cursor: crosshair;   
 }
@@ -28,10 +35,18 @@ html {
     /* border: 1.5px solid black; */
 }
 
+.flowDown {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
 .headline {
     font-size: 4em;
     width: fit-content;
     margin: auto;
+    padding-bottom: 30px;
+    padding-top: 30px;
     align-self: center;
     color: #222;
 }
@@ -102,15 +117,13 @@ html {
 
 .modal {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     width: 50%;
     position: absolute;
     z-index: 1;
-    top: 10%;
-    left: 50%;
-    width: 50%;
-    -ms-transform: translate(-50%, 0%);
-    transform: translate(-50%, 0%); 
+    transform: translateX(33%);
+    
 }
 .ethDataResponseField {
     background-color: #222;
@@ -119,7 +132,8 @@ html {
 }
 
 .taskbar {
-    display: flex;
+    display: grid;
+    grid-template-columns: 90% 10%;
     color: #111;
     width: 100%;
     font-size: 1.1em;
@@ -128,17 +142,13 @@ html {
 }
 
 .modalTitle {
-    position: relative;
-    left: 10px;
-    width: 90%;
     text-align: center;
-    margin-right: 15px;
+    font-size: 1.4em;
 }
 
 .closeButton {
-    padding-left: 15px;
-    padding-right: 15px;
     font-size: 1.4em;
+    text-align: center;
 }
 
 
@@ -152,3 +162,48 @@ html {
     background-color: #EEEEEE;
     color: #222;
 }
+
+.redFade {
+    animation: redFadeAnimation 1s forwards;
+    /*border: 1px solid rgb(255,0,0); */
+    background-color: rgb(255,0,0);
+    
+}
+
+.greenFade {
+    animation: greenFadeAnimation 1s forwards;
+    /* border: 1px solid rgb(0,125,125); */
+    background-color: rgb(0,125,12);
+}
+@keyframes redFadeAnimation {
+    100% {
+        /* border: 1px solid rgb(0,0,0); */
+        background-color: rgb(0,0,0,0);
+    }
+}
+
+@keyFrames greenFadeAnimation {
+    
+    100% {
+        background-color: rgb(0,0,0,0);
+        /* border: 1px solid rgb(0,0,0); */
+    }
+}
+
+.priceTable {
+    width: 100%;
+}
+.dataEntry {
+    background-color: rgb(0,0,0,0);
+    /* border: 1px solid rgb(0,0,0); */
+}
+
+.tableKey {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.tableValue {
+    border-bottom: 1px solid black;
+}
+
