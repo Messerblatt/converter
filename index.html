@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 
-<html lang="en" class="darkThemed">
+<html lang="en" class="themeSensitive">
 <head >
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    
+    <script src="important_addresses.js"></script>
     <link rel="shortcut icon" type="image/jpg" href="images/favicon2.ico">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Space+Mono">
@@ -20,113 +22,288 @@
 </head>
 
 <body class="font-mono main">
-  <div class="modal">
-    <div class="taskbar">
-      <div class="modalTitle">_</div>
+  <div class="modal themeSensitive">
+    <div class="taskbar themeSensitive">
+      <div class="modalTitle themeSensitive">_</div>
       <div class="closeButton cursorChange">X</div>
     </div>
-    <div class="ethDataResponseField"></div>
+    <div class="ethDataResponseField themeSensitive"></div>
     </div>
   <div>
-    <h1 class="text darkThemed headline mt-20 border-b-2 border-zinc-600">Basic Ξthereum Converter</h1>
+    <h1 class="themeSensitive headline mt-20 border-b-2 border-zinc-600 ">Basic Ξthereum Converter</h1>
   </div>
   
   
-  <div class="text darkThemed">You can find the conversion functions <a target="_blank" class="link contrasted" href="https://github.com/ethereumjs/ethereumjs-units">here</a>.</div>
+  <div class="text themeSensitive">You can find the conversion functions <a target="_blank" href="https://github.com/ethereumjs/ethereumjs-units">here</a>.</div>
   
   
-  
-  <div class="darkTheme cursorChange"><i class="fa fa-moon-o" aria-hidden="true"></i></div>
+            
+  <div class="themeSwitchButton cursorChange"><i class="fa fa-sun-o" aria-hidden="true"></i></div>
 
 <div class="container">
   <div class="font-mono text-gray-700">
     <div>
-      <div class="xl2 darkThemed" for="eth">ΞTH</div>
+      <div class="xl2 themeSensitive" for="eth">ΞTH</div>
       <input class="textL" type="number" id="eth" placeholder="Enter ETH amount" oninput="convert('eth')" />
     </div>
     <div>
-      <div class="xl2 darkThemed" for="weiInput">GWEI</div>
+      <div class="xl2 themeSensitive" for="weiInput">GWEI</div>
       <input class="textL" type="number" id="gwei" placeholder="Enter Gwei amount" oninput="convert('gwei')">
     </div>
     <div>
-      <div class="xl2 darkThemed" for="weiInput">WEI</div>
+      <div class="xl2 themeSensitive" for="weiInput">WEI</div>
       <input class="textL" type="number" id="wei" placeholder="Enter Wei amount" oninput="convert('wei')">
     </div>
     </div>
 </div>
 
-
-
 <div class="container">
 <div class="font-mono text-gray-700">
   <div>
-    <div class="xl2 darkThemed" for="decimal">DECIMAL: </div>
+    <div class="xl2 themeSensitive" for="decimal">DECIMAL: </div>
     <input class="textL " type="number" id="decimal" step="0.1" placeholder="12345" oninput="convert('decimal')">
   </div>
   <div>
-    <div class="xl2 darkThemed" for="hex">HEX: </div>
+    <div class="xl2 themeSensitive" for="hex">HEX: </div>
     <input class="textL" type="text" id="hex" placeholder="0x000fff" oninput="convert('hex')">
   </div>
 </div>
 </div>
 
-<h1 class="text darkThemed headline border-b-2 border-zinc-600">Fetch Price Data</h1>
+<h1 class="text themeSensitive headline border-b-2 border-zinc-600">Fetch Price Data</h1>
 
 <div class="container flowDown">
-<div class="button darkThemed _fetch cursorChange" id="ETH">Ethererum (ETH)</div>
-<div class="button darkThemed _fetch cursorChange" id="BNB">Binance (BNB)</div>
-<div class="button darkThemed _fetch cursorChange" id="USDT">Tether (USDT)</div>
-<div class="button darkThemed _fetch cursorChange" id="AVAX">Avalanche (AVAX)</div>
-<div class="button darkThemed _fetch cursorChange" id="LINK">LINK (LINK)</div>
-<div class="button darkThemed _fetch cursorChange" id="ARB">Arbitrum (ARB)</div>
+<div class="button themeSensitive buttonHighlight cursorChange" id="ETH">Ethererum (ETH)</div>
+<div class="button themeSensitive buttonHighlight cursorChange" id="BNB">Binance (BNB)</div>
+<div class="button themeSensitive buttonHighlight cursorChange" id="USDT">Tether (USDT)</div>
+<div class="button themeSensitive buttonHighlight cursorChange" id="AVAX">Avalanche (AVAX)</div>
+<div class="button themeSensitive buttonHighlight cursorChange" id="LINK">LINK (LINK)</div>
+<div class="button themeSensitive buttonHighlight cursorChange" id="ARB">Arbitrum (ARB)</div>
 </div>
 
+
+<h1 class="text themeSensitive headline border-b-2 border-zinc-600">Chainlink Oracles</h1>
+
+<div class="container" id="oraclesContainer">
+
+</div>
+
+
+
+<h1 class="text themeSensitive headline border-b-2 border-zinc-600">Toplist by 24H Volume</h1>
+
+<div class="container flowDown">
+<div class="button themeSensitive cursorChange toplist24h" id="ETH">Toplist24H</div>
+</div>
+
+
+<!-- 
 <div class="footer font-mono border-t-2 border-zinc-600">
   <div class="grid-two-cols">
     <div class="item">Made by <a class="link contrasted" target="_blank" href="https://github.com/Messerblatt">Markus</a></div>
     <div class="item">|</div> 
   <div class="item">Deployed 2023</div>
 </div>
-</div>
+</div> -->
 
-<script>  
-  let timer;
-  let previousDataTemplate = {};
-  let fsyms = "";
+<script>
+let timer;
+let previousDataTemplate = {};
+let fsyms = "";
 
-  $(document).ready(function()  {
+// Not in order:
+priceKeys = [
+  {
+    "ID" : "PRICE",
+    "unit" : "$"
+  },
+  {
+    "ID" : "LASTVOLUME",
+    "unit" : "Ξ"
+  },
+  {
+    "ID" : "VOLUMEDAY",
+    "unit" : "Ξ"
+  },
+  {
+    "ID" : "VOLUMEDAYTO",
+    "unit" : "$"
+  },
+  {
+    "ID" : "VOLUME24HOUR",
+    "unit" : "Ξ"
+  },
+  {
+    "ID" : "VOLUME24HOURTO",
+    "unit" : "$"
+  },
+  {
+    "ID" : "OPENDAY",
+    "unit" : "$"
+  },
+  {
+    "ID" : "HIGHDAY",
+    "unit" : "$"
+  },
+  {
+    "ID" : "LOWDAY",
+    "unit" : "$"
+  },
+  {
+    "ID" : "OPENHOUR",
+    "unit" : "$"
+  },
+  {
+    "ID" : "HIGHHOUR",
+    "unit" : "$"
+  },
+  {
+    "ID" : "LOWHOUR",
+    "unit" : "$"
+  },
+  {
+    "ID" : "VOLUMEHOUR",
+    "unit" : "Ξ"
+  },
+  {
+    "ID" : "CHANGE24HOUR",
+    "unit" : "$"
+  },
+  {
+    "ID" : "CHANGEDAY",
+    "unit" : "$"
+  },
+  {
+    "ID" : "CHANGEHOUR",
+    "unit" : "$"
+  },
+  {
+    "ID" : "SUPPLY",
+    "unit" : "Ξ"
+  },
+  {
+    "ID" : "MKTCAP",
+    "unit" : "$"
+  },
+  {
+    "ID" : "CIRCULATINGSUPPLY",
+    "unit" : "$"
+  },
+  {
+    "ID" : "TOTALVOLUME24H",
+    "unit" : "Ξ"
+  }
+]
+
+priceKeys2 = ["LASTUPDATE",
+  "LASTVOLUMETO",
+  "LASTTRADEID",
+  "VOLUME24HOURTO",
+  "OPEN24HOUR",
+  "HIGH24HOUR",
+  "LOW24HOUR",
+  "LASTMARKET",
+  "VOLUMEHOURTO",
+  "TOPTIERVOLUME24HOUR",
+  "TOPTIERVOLUME24HOURTO",
+  "CHANGEPCT24HOUR",
+  "CHANGEPCTDAY",
+  "CHANGEPCTHOUR",
+  "CONVERSIONTYPE",
+  "CONVERSIONSYMBOL",
+  "CONVERSIONLASTUPDATE",
+  "MKTCAPPENALTY",
+  "CIRCULATINGSUPPLYMKTCAP",
+  "TOTALVOLUME24HTO",
+  "TOTALTOPTIERVOLUME24H",
+  "TOTALTOPTIERVOLUME24HTO",
+  "IMAGEURL"
+]
+
+function getOracles() {
+  fields = "<table class='oraclesTable'><th></th><th></th>";
+  oracles = [];
+  data.ETHUSDOracles.forEach(element => {
+    html = `<tr><td class="themeSensitive cursorChange tableLeftAligned">${element.name}</td><td><a target="_blank" href="https://etherscan.io/address/${element.address}">${element.address}</td></tr>`
+    fields += html; 
+  });
+
+  fields += "</table>"
+  $("#oraclesContainer").html(fields);
+}
+
+currentTheme = "brightTheme";
+
+$(document).ready(function()  {
+    $(".themeSensitive").addClass(currentTheme);
+    $(".button").addClass("brightThemeButtonHighlight");
     $(".modal").hide();
+    getOracles();
+  })
+
+
+function switchTheme() { 
+  if (currentTheme === "brightTheme") {
+    currentTheme = "darkTheme"
+  } else {
+    currentTheme = "brightTheme";
+  }
+}
+
+  
+  $(".themeSwitchButton").on("click", function() {
+    switchTheme();
+    if(currentTheme === "darkTheme") {
+      $(".themeSwitchButton").html(`<i class='fa fa-moon-o' aria-hidden='true'></i>`);
+      $(".themeSensitive").removeClass("brightTheme");
+      $(".themeSensitive").addClass("darkTheme");
+      $(".button").addClass("darkThemeButtonHighlight");
+      $(".button").removeClass("brightThemeButtonHighlight");
+      
+    } else  {
+      $(".themeSwitchButton").html(`<i class='fa fa-sun-o' aria-hidden='true'></i>`);
+      $(".themeSensitive").removeClass("darkTheme");
+      $(".themeSensitive").addClass("brightTheme");
+      $(".button").removeClass("darkThemeButtonHighlight");
+      $(".button").addClass("brightThemeButtonHighlight");      
+    }
   })
 
   function createTableRow(i, j) {
     let cssClass = "dataEntry";
-    let key = "";
-    let value = "";
     
     if(!isNaN(j) && j > previousDataTemplate[i]) {
-      
       cssClass = "greenFade";
     } else if(!isNaN(j) && j < previousDataTemplate[i]) {
       cssClass = "redFade";
+    }  else if(!isNaN(j) && j == previousDataTemplate[i]) {
+        cssClass = "whiteFade";
     }
     
     previousDataTemplate[i] = j;
     
-    col1 = `<td class="${cssClass} tableKey">${i}</td>`;
-    col2 = `<td class="${cssClass} tableValue">${j}</td>`
+    col1 = `<td class="${cssClass} ${currentTheme} tableKey">${i}</td>`;
+    col2 = `<td class="${cssClass} ${currentTheme} tableValue">${j}</td>`
     return `<tr>${col1}${col2}</tr>`;
   }
 
-  function _fetch() {
-    fields = "<table class='priceTable'><th></th><th></th>";
+  function _fetchPriceData() {
+    fields = `<table class='priceTable ${currentTheme}'><th></th><th></th>`;
     $.ajax({
       url: `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${fsyms}&tsyms=USD`,
       complete: function (result) {
-        JSONResponse = data = JSON.parse(result.responseText);
+        JSONResponse = JSON.parse(result.responseText);
         priceData = JSONResponse.RAW[fsyms].USD;
-
+        
+        jQuery.each(priceKeys, function(i,j) {
+          
+        })
+        // Cleanse priceData:
         jQuery.each(priceData, function(i,j) {
-          fields += createTableRow(i,j);
+          
+        //  if (Object.keys(priceKeys).includes(i)) {
+            fields += createTableRow(i,j);
+          //}
         })
 
         fields += "</table>";
@@ -138,48 +315,57 @@
     });
   }
   
-  $("._fetch").on("click", function() {
+  $(".buttonHighlight").on("click", function() {
     fsyms = $(this).attr('id');
     
-    _fetch();
+    _fetchPriceData();
     $(".modalTitle").html(fsyms);
     $(".modal").show();
-    timer = setInterval(_fetch, 5000);
+    timer = setInterval(_fetchPriceData, 2000);
 })
+
+
+function _fetchTop24() {
+  let winners = ""
+  winners += "<div class='FlowContainer themeSensitive'>";
+  $.ajax({
+    url: `https://min-api.cryptocompare.com/data/top/totalvolfull?limit=33&tsym=USD`,
+    complete: function(result) {
+      JSONResponse = JSON.parse(result.responseText);
+      console.log(JSONResponse);
+      
+      jQuery.each(JSONResponse.Data, function(i) {
+        //console.log(JSONResponse.Data[i].RAW.USD);
+        console.log("Winner: ", JSONResponse.Data[i].CoinInfo.Name);
+        winners += `<div class="winnerButtonContainer">`;
+        winners += `<div class="winnerButton cursorChange">${JSONResponse.Data[i].CoinInfo.Name}</div>`;
+        winners += `<div class="winnerButtonMeta">${JSONResponse.Data[i].DISPLAY.USD.VOLUMEDAY}</div>`;
+        winners += `</div>`;
+      });
+
+      // Two closing because to divs are open at this point
+      winners += "</div>";
+      $(".ethDataResponseField").html(winners);
+    }
+  })
+  console.log("Winners:", winners);
+  
+  
+}
+
+$(".toplist24h").on("click", function() {
+  _fetchTop24();
+  $(".modalTitle").html("<h1>Winners 24h</h1>");
+  $(".modal").show();
+});
 
 $(".closeButton").on("click", function() {
   $(".modal").hide();
+  $(".ethDataResponseField").html("");
   clearInterval(timer);
   previousDataTemplate = {};
   cssClass = "";
-})
-
-  toggled = true;
-  $(".darkTheme").on("click", function() {
-    if (toggled === false) {
-      toggled = true;
-
-      $(".darkTheme").html("<i class='fa fa-moon-o' aria-hidden='true'></i>");
-      //$(".darkThemed").addClass("darkThemed");
-      $("html").addClass("darkThemed");
-      $(".xl2").addClass("darkThemed");
-      $(".text").addClass("darkThemed");
-      $("._fetch").addClass("darkThemed");
-      $(".link").addClass("contrasted");
-      
-    
-    } else  {
-      toggled = false;
-      $(".darkTheme").html("<i class='fa fa-sun-o' aria-hidden='true'></i>");
-      //$(".darkThemed").removeClass("darkThemed");
-      $("html").removeClass("darkThemed");
-      $(".xl2").removeClass("darkThemed");
-      $(".text").removeClass("darkThemed");
-      $("._fetch").removeClass("darkThemed");
-      $(".link").removeClass("contrasted");
-    }
-  })
-    
+})    
 
   function ethToWei(value) { return (value * 1e18).toFixed(18) }
   function weiToGwei(value) { return (value / 1e9).toFixed(18) }
@@ -216,6 +402,16 @@ $(".closeButton").on("click", function() {
       document.getElementById('decimal').value = decAmount;
   }
   }
+
+  
+  //<h1>Toplist by 24H Volume Full Data</h1>
+  //https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD
+
+  //Latest News Articles
+  //https://min-api.cryptocompare.com/data/v2/news/?lang=EN
+
+  //Instrument Latest Tick
+  //https://data-api.cryptocompare.com/futures/v1/latest/tick?market=kraken&instruments=BTC-USD-INVERSE-PERPETUAL
 </script>
 </body>
 </html>
