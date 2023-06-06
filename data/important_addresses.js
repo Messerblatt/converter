@@ -1,4 +1,4 @@
-var data = {
+var important_addresses = {
 	"Routers": [
 	  {
 		"name": "Pancakeswap",
@@ -397,3 +397,6 @@ var data = {
 	  }
 	]
 };
+
+export default { important_addresses };
+	

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en" class="themeSensitive">
 <head >
     <meta charset="UTF-8">
@@ -7,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     
-    <script src="important_addresses.js"></script>
     <link rel="shortcut icon" type="image/jpg" href="images/favicon2.ico">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Space+Mono">
@@ -33,11 +31,8 @@
     <h1 class="themeSensitive headline mt-20 border-b-2 border-zinc-600 ">Basic Ξthereum Converter</h1>
   </div>
   
-  
   <div class="text themeSensitive">You can find the conversion functions <a target="_blank" href="https://github.com/ethereumjs/ethereumjs-units">here</a>.</div>
-  
-  
-            
+              
   <div class="themeSwitchButton cursorChange"><i class="fa fa-sun-o" aria-hidden="true"></i></div>
 
 <div class="container">
@@ -83,7 +78,6 @@
 
 
 <h1 class="text themeSensitive headline border-b-2 border-zinc-600">Chainlink Oracles</h1>
-
 <div class="container" id="oraclesContainer">
 
 </div>
@@ -96,322 +90,16 @@
 <div class="button themeSensitive cursorChange toplist24h" id="ETH">Toplist24H</div>
 </div>
 
+<div class="avalanche_container"></div>
 
-<!-- 
-<div class="footer font-mono border-t-2 border-zinc-600">
+<div class="footer text themeSensitive border-t-2 border-zinc-600">
   <div class="grid-two-cols">
-    <div class="item">Made by <a class="link contrasted" target="_blank" href="https://github.com/Messerblatt">Markus</a></div>
+    <div class="item">Made by <a target="_blank" href="https://github.com/Messerblatt">Markus</a></div>
     <div class="item">|</div> 
   <div class="item">Deployed 2023</div>
 </div>
-</div> -->
+</div>
 
-<script>
-let timer;
-let previousDataTemplate = {};
-let fsyms = "";
-
-// Not in order:
-priceKeys = [
-  {
-    "ID" : "PRICE",
-    "unit" : "$"
-  },
-  {
-    "ID" : "LASTVOLUME",
-    "unit" : "Ξ"
-  },
-  {
-    "ID" : "VOLUMEDAY",
-    "unit" : "Ξ"
-  },
-  {
-    "ID" : "VOLUMEDAYTO",
-    "unit" : "$"
-  },
-  {
-    "ID" : "VOLUME24HOUR",
-    "unit" : "Ξ"
-  },
-  {
-    "ID" : "VOLUME24HOURTO",
-    "unit" : "$"
-  },
-  {
-    "ID" : "OPENDAY",
-    "unit" : "$"
-  },
-  {
-    "ID" : "HIGHDAY",
-    "unit" : "$"
-  },
-  {
-    "ID" : "LOWDAY",
-    "unit" : "$"
-  },
-  {
-    "ID" : "OPENHOUR",
-    "unit" : "$"
-  },
-  {
-    "ID" : "HIGHHOUR",
-    "unit" : "$"
-  },
-  {
-    "ID" : "LOWHOUR",
-    "unit" : "$"
-  },
-  {
-    "ID" : "VOLUMEHOUR",
-    "unit" : "Ξ"
-  },
-  {
-    "ID" : "CHANGE24HOUR",
-    "unit" : "$"
-  },
-  {
-    "ID" : "CHANGEDAY",
-    "unit" : "$"
-  },
-  {
-    "ID" : "CHANGEHOUR",
-    "unit" : "$"
-  },
-  {
-    "ID" : "SUPPLY",
-    "unit" : "Ξ"
-  },
-  {
-    "ID" : "MKTCAP",
-    "unit" : "$"
-  },
-  {
-    "ID" : "CIRCULATINGSUPPLY",
-    "unit" : "$"
-  },
-  {
-    "ID" : "TOTALVOLUME24H",
-    "unit" : "Ξ"
-  }
-]
-
-priceKeys2 = ["LASTUPDATE",
-  "LASTVOLUMETO",
-  "LASTTRADEID",
-  "VOLUME24HOURTO",
-  "OPEN24HOUR",
-  "HIGH24HOUR",
-  "LOW24HOUR",
-  "LASTMARKET",
-  "VOLUMEHOURTO",
-  "TOPTIERVOLUME24HOUR",
-  "TOPTIERVOLUME24HOURTO",
-  "CHANGEPCT24HOUR",
-  "CHANGEPCTDAY",
-  "CHANGEPCTHOUR",
-  "CONVERSIONTYPE",
-  "CONVERSIONSYMBOL",
-  "CONVERSIONLASTUPDATE",
-  "MKTCAPPENALTY",
-  "CIRCULATINGSUPPLYMKTCAP",
-  "TOTALVOLUME24HTO",
-  "TOTALTOPTIERVOLUME24H",
-  "TOTALTOPTIERVOLUME24HTO",
-  "IMAGEURL"
-]
-
-function getOracles() {
-  fields = "<table class='oraclesTable'><th></th><th></th>";
-  oracles = [];
-  data.ETHUSDOracles.forEach(element => {
-    html = `<tr><td class="themeSensitive cursorChange tableLeftAligned">${element.name}</td><td><a target="_blank" href="https://etherscan.io/address/${element.address}">${element.address}</td></tr>`
-    fields += html; 
-  });
-
-  fields += "</table>"
-  $("#oraclesContainer").html(fields);
-}
-
-currentTheme = "brightTheme";
-
-$(document).ready(function()  {
-    $(".themeSensitive").addClass(currentTheme);
-    $(".button").addClass("brightThemeButtonHighlight");
-    $(".modal").hide();
-    getOracles();
-  })
-
-
-function switchTheme() { 
-  if (currentTheme === "brightTheme") {
-    currentTheme = "darkTheme"
-  } else {
-    currentTheme = "brightTheme";
-  }
-}
-
-  
-  $(".themeSwitchButton").on("click", function() {
-    switchTheme();
-    if(currentTheme === "darkTheme") {
-      $(".themeSwitchButton").html(`<i class='fa fa-moon-o' aria-hidden='true'></i>`);
-      $(".themeSensitive").removeClass("brightTheme");
-      $(".themeSensitive").addClass("darkTheme");
-      $(".button").addClass("darkThemeButtonHighlight");
-      $(".button").removeClass("brightThemeButtonHighlight");
-      
-    } else  {
-      $(".themeSwitchButton").html(`<i class='fa fa-sun-o' aria-hidden='true'></i>`);
-      $(".themeSensitive").removeClass("darkTheme");
-      $(".themeSensitive").addClass("brightTheme");
-      $(".button").removeClass("darkThemeButtonHighlight");
-      $(".button").addClass("brightThemeButtonHighlight");      
-    }
-  })
-
-  function createTableRow(i, j) {
-    let cssClass = "dataEntry";
-    
-    if(!isNaN(j) && j > previousDataTemplate[i]) {
-      cssClass = "greenFade";
-    } else if(!isNaN(j) && j < previousDataTemplate[i]) {
-      cssClass = "redFade";
-    }  else if(!isNaN(j) && j == previousDataTemplate[i]) {
-        cssClass = "whiteFade";
-    }
-    
-    previousDataTemplate[i] = j;
-    
-    col1 = `<td class="${cssClass} ${currentTheme} tableKey">${i}</td>`;
-    col2 = `<td class="${cssClass} ${currentTheme} tableValue">${j}</td>`
-    return `<tr>${col1}${col2}</tr>`;
-  }
-
-  function _fetchPriceData() {
-    fields = `<table class='priceTable ${currentTheme}'><th></th><th></th>`;
-    $.ajax({
-      url: `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${fsyms}&tsyms=USD`,
-      complete: function (result) {
-        JSONResponse = JSON.parse(result.responseText);
-        priceData = JSONResponse.RAW[fsyms].USD;
-        
-        jQuery.each(priceKeys, function(i,j) {
-          
-        })
-        // Cleanse priceData:
-        jQuery.each(priceData, function(i,j) {
-          
-        //  if (Object.keys(priceKeys).includes(i)) {
-            fields += createTableRow(i,j);
-          //}
-        })
-
-        fields += "</table>";
-        $(".ethDataResponseField").html(fields);
-        
-        }, error: function(error) {
-          console.error(error);
-        }
-    });
-  }
-  
-  $(".buttonHighlight").on("click", function() {
-    fsyms = $(this).attr('id');
-    
-    _fetchPriceData();
-    $(".modalTitle").html(fsyms);
-    $(".modal").show();
-    timer = setInterval(_fetchPriceData, 2000);
-})
-
-
-function _fetchTop24() {
-  let winners = ""
-  winners += "<div class='FlowContainer themeSensitive'>";
-  $.ajax({
-    url: `https://min-api.cryptocompare.com/data/top/totalvolfull?limit=33&tsym=USD`,
-    complete: function(result) {
-      JSONResponse = JSON.parse(result.responseText);
-      console.log(JSONResponse);
-      
-      jQuery.each(JSONResponse.Data, function(i) {
-        //console.log(JSONResponse.Data[i].RAW.USD);
-        console.log("Winner: ", JSONResponse.Data[i].CoinInfo.Name);
-        winners += `<div class="winnerButtonContainer">`;
-        winners += `<div class="winnerButton cursorChange">${JSONResponse.Data[i].CoinInfo.Name}</div>`;
-        winners += `<div class="winnerButtonMeta">${JSONResponse.Data[i].DISPLAY.USD.VOLUMEDAY}</div>`;
-        winners += `</div>`;
-      });
-
-      // Two closing because to divs are open at this point
-      winners += "</div>";
-      $(".ethDataResponseField").html(winners);
-    }
-  })
-  console.log("Winners:", winners);
-  
-  
-}
-
-$(".toplist24h").on("click", function() {
-  _fetchTop24();
-  $(".modalTitle").html("<h1>Winners 24h</h1>");
-  $(".modal").show();
-});
-
-$(".closeButton").on("click", function() {
-  $(".modal").hide();
-  $(".ethDataResponseField").html("");
-  clearInterval(timer);
-  previousDataTemplate = {};
-  cssClass = "";
-})    
-
-  function ethToWei(value) { return (value * 1e18).toFixed(18) }
-  function weiToGwei(value) { return (value / 1e9).toFixed(18) }
-  function gweiToWei(value) { return (value * 1e9).toFixed(18)}
-  function weiToEth(value) { return (value / 1e18).toFixed(18); }
-  function decToHex(value) { return value.toString(16); }
-  function hexToDec(value) {
-    if (value.includes("0x")) {
-        hexvalue = value.split("0x")[1]
-          return parseInt(hexvalue , 16);
-    } else { return parseInt(value, 16); }
-  }
-
-
-  function convert(from) {
-    const Input = document.getElementById(from);
-    const Amount = parseFloat(Input.value);
-  
-    if (from === "eth") {
-        document.getElementById('wei').value = ethToWei(Amount);
-        document.getElementById('gwei').value = weiToGwei(ethToWei(Amount));
-    } else if (from === "wei") {
-      document.getElementById('eth').value = weiToEth(Amount);
-      document.getElementById('gwei').value = weiToGwei(Amount);
-    } else if (from === "gwei") {
-      document.getElementById('eth').value = gweiToWei(weiToEth(Amount));
-      document.getElementById('wei').value = weiToEth(Amount);
-    }
-	else if (from === "decimal") {
-      document.getElementById('hex').value = "0x" + decToHex(Amount);
-    } else if (from === "hex") {
-      data = document.getElementById('hex').value;
-      const decAmount = hexToDec(data);
-      document.getElementById('decimal').value = decAmount;
-  }
-  }
-
-  
-  //<h1>Toplist by 24H Volume Full Data</h1>
-  //https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD
-
-  //Latest News Articles
-  //https://min-api.cryptocompare.com/data/v2/news/?lang=EN
-
-  //Instrument Latest Tick
-  //https://data-api.cryptocompare.com/futures/v1/latest/tick?market=kraken&instruments=BTC-USD-INVERSE-PERPETUAL
-</script>
+<script src="logic.js"></script>
 </body>
 </html>
