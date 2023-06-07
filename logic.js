@@ -178,7 +178,7 @@ function getOracles() {
            
   	oracleData.forEach(element => {
     fields += ["<tr>",
-            ` <td class='themeSensitive cursorChange tableLeftAligned'>${element.name}</td>`,
+            ` <td class='tableLeftAligned ${currentTheme}'>${element.name}</td>`,
             "   <td>",
             `     <a target="_blank" href="https://etherscan.io/address/${element.address}">${element.address}`,
             "   </td>",
@@ -186,7 +186,8 @@ function getOracles() {
   });
   
     fields += "</table>"
-    $("#oraclesContainer").html(fields);
+    //$("#oraclesContainer").html(fields);
+	$(".ethDataResponseField").html(fields);
     
 }
   
@@ -274,7 +275,7 @@ function getOracles() {
 })
 
 function fetchTop24() {
-  let winnersHTML = "<div class='FlowContainer themeSensitive'>";
+  let winnersHTML = `<div class='FlowContainer themeSensitive ${currentTheme}'>`;
 
   $.ajax({
     url: `https://min-api.cryptocompare.com/data/top/totalvolfull?limit=33&tsym=USD`,
@@ -284,7 +285,7 @@ function fetchTop24() {
       jQuery.each(winners, function(counter) {
         winnersHTML += [
           `<div class="winnerButtonContainer">`,
-          ` <div class="winnerButton cursorChange">${winners[counter].CoinInfo.Name}</div>`,
+          ` <div class="winnerButton">${winners[counter].CoinInfo.Name}</div>`,
           ` <div class="winnerButtonMeta">${winners[counter].DISPLAY.USD.VOLUMEDAY}</div>`,
           `</div>`
         ].join("\n");
