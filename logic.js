@@ -170,11 +170,13 @@ function getOracles() {
 	  ];
   
 
-  fields =  "<table class='oraclesTable'>",
+	  // Open the oracleDataTable-tag with two empty headers. 
+	  // We don't need to put text into the <th> because data is self-explanatory
+  	fields =  "<table class='oraclesTable'>",
                 " <th></th>",
                 " <th></th>";
            
-  oracleData.forEach(element => {
+  	oracleData.forEach(element => {
     fields += ["<tr>",
             ` <td class='themeSensitive cursorChange tableLeftAligned'>${element.name}</td>`,
             "   <td>",
@@ -188,10 +190,10 @@ function getOracles() {
     
 }
   
+// A not quite D.R.Y. way of a darkTheme/brightTheme-switching. Refactor this:
   $(".themeSwitchButton").on("click", function() {
     currentTheme = currentTheme === "brightTheme" ? "darkTheme" : "brightTheme";
 
-    // A not quite D.R.Y. way of a darkTheme/brightTheme-switching. Refactor this:
     if(currentTheme === "darkTheme") {
       $(".themeSwitchButton").html(`<i class='fa fa-moon-o' aria-hidden='true'></i>`);
       $(".themeSensitive").removeClass("brightTheme");
@@ -208,45 +210,53 @@ function getOracles() {
     }
   })
 
-  function createTableRow(i, j) {
+
+  function createTableRow(key_of_pricedata, value_of_pricetata) {
+	
     let cssClass = "dataEntry";
-    previousValue = previousDataTemplate[i]
-    if(!isNaN(j) && j > previousValue) {
+    previousValue = previousDataTemplate[key_of_pricedata]
+    if(!isNaN(value_of_pricetata) && value_of_pricetata > previousValue) {
       cssClass = "greenFade";
-    } else if(!isNaN(j) && j < previousValue) {
+    } else if(!isNaN(value_of_pricetata) && value_of_pricetata < previousValue) {
       cssClass = "redFade";
     }  else {
         cssClass = "whiteFade";
     }
     
-    previousDataTemplate[i] = j;
+    previousDataTemplate[key_of_pricedata] = value_of_pricetata;
     return [
       "<tr>",
-        `<td class="${cssClass} ${currentTheme} tableKey">${i}</td>`,
-        `<td class="${cssClass} ${currentTheme} tableValue">${j}</td>`,
+        `<td class="${cssClass} ${currentTheme} tableKey">${key_of_pricedata}</td>`,
+        `<td class="${cssClass} ${currentTheme} tableValue">${value_of_pricetata}</td>`,
       "</tr>"].join("\n")
     
   }
 
   function fetchPriceData() {
-    $(".modalTitle").html(fsyms);
+    $(".modalTitle").html(currencySymbol);
     fields = [
-      `<table class='priceTable ${currentTheme}'>`,
-      " <th></th>",
-      " <th></th>"
+		"<div class='priceDataWrapper'>",
+      		`<table class='priceTable ${currentTheme}'>`,
+      		" <th></th>",
+      		" <th></th>"
     ].join("\n")
 
     $.ajax({
-      url: `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${fsyms}&tsyms=USD`,
+      url: `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${currencySymbol}&tsyms=USD`,
       complete: function (result) {
         JSONResponse = JSON.parse(result.responseText);
-        priceData = JSONResponse.RAW[fsyms].USD;
-        
+        priceData = JSONResponse.RAW[currencySymbol].USD;
+        count = 0
         jQuery.each(priceData, function(i,j) {
-          fields += createTableRow(i,j);
+			// limit the verbosity by adding a hardcap for the number of table rows.
+			// TODO: make the table scrollable
+			if (count++ <= 35) {
+          		fields += createTableRow(i,j);
+			}
         })
 
-        fields += "</table>";
+        fields += "</table>" // Enclosing .priceTable
+		fields += "</div>"; // Enclosing .priceDataWrapper
         $(".ethDataResponseField").html(fields);
         
         }, error: function(error) {
@@ -256,8 +266,8 @@ function getOracles() {
   }
   
   $(".buttonHighlight").on("click", function() {
-    fsyms = $(this).attr('id');
-    fetchPriceData(fsyms);
+    currencySymbol = $(this).attr('id');
+    fetchPriceData(currencySymbol);
     
     $(".modal").show();
     timer = setInterval(fetchPriceData, 2000);
@@ -270,12 +280,12 @@ function fetchTop24() {
     url: `https://min-api.cryptocompare.com/data/top/totalvolfull?limit=33&tsym=USD`,
     complete: function(result) {
       winners = JSON.parse(result.responseText).Data;
-      console.log(winners);
-      jQuery.each(winners, function(i) {
+      
+      jQuery.each(winners, function(counter) {
         winnersHTML += [
           `<div class="winnerButtonContainer">`,
-          ` <div class="winnerButton cursorChange">${winners[i].CoinInfo.Name}</div>`,
-          ` <div class="winnerButtonMeta">${winners[i].DISPLAY.USD.VOLUMEDAY}</div>`,
+          ` <div class="winnerButton cursorChange">${winners[counter].CoinInfo.Name}</div>`,
+          ` <div class="winnerButtonMeta">${winners[counter].DISPLAY.USD.VOLUMEDAY}</div>`,
           `</div>`
         ].join("\n");
       });
