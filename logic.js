@@ -186,8 +186,8 @@ function getOracles() {
   });
   
     fields += "</table>"
-    //$("#oraclesContainer").html(fields);
-	$(".ethDataResponseField").html(fields);
+    $("#oraclesContainer").html(fields);
+	//$(".ethDataResponseField").html(fields);
     
 }
   
