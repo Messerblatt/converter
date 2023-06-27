@@ -94,7 +94,7 @@ a:hover {
     justify-content: center;
     padding-top: 30px;
     padding-bottom: 30px;
-    
+    max-width: 100%;
     /* border: 1.5px solid black; */
 }
 
